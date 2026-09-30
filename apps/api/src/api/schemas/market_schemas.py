@@ -3,8 +3,7 @@ from api.core.enum import NewsRisk,MarketTrend,MarketSetup
 class Price(BaseModel):
     current_price:float 
     change:float = Field(
-        ge=0,
-        description="change rate in  percentage % "
+        description="Percentage price change during the day. Can be positive or negative."
     )
     price_high:float=Field(description="the highest point price reach during the day ")
     price_low:float=Field(
@@ -29,7 +28,8 @@ class EconomicNews(BaseModel):
     
 class Setup(BaseModel):
     setup:MarketSetup=Field(
-        description="the setup should the trader look in the market eg : short setup "
+        description="The market setup that should be watched, "
+                    "for example long, short, or no trade."
     )
     
 
