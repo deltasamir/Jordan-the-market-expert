@@ -7,3 +7,4 @@ from apps.api.src.api.schemas.market_schemas import Price
 
 #model name 
 model_name :str = "Jordan"
+
