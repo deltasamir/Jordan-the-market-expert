@@ -1,5 +1,6 @@
 import json
 from pydantic import BaseModel,Field
+from openai.types.chat import ChatCompletionToolParam
 
 
 from apps.api.src.api.schemas.market_schemas import Price
@@ -23,12 +24,14 @@ async def get_market_data(args : MarketDataArgs) -> Price:
         price_low=1.1688,
     )
     
-MARKET_DATA_TOOL = {
-    "type":"function",
-    "name":"get_market_data",
-    "description":(
-        "Get current price information for a trading instrument "
-        "including current price, daily change, daily high and daily low.",
-    ),
-    "parameters":MarketDataArgs.model_json_schema(),
+MARKET_DATA_TOOL: ChatCompletionToolParam = {
+    "type": "function",
+    "function": {
+        "name": "get_market_data",
+        "description": (
+            "Get current price information for a trading instrument "
+            "including current price, daily change, daily high and daily low."
+        ),
+        "parameters": MarketDataArgs.model_json_schema(),
+    },
 }

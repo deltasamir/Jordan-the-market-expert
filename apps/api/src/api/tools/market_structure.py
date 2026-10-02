@@ -1,5 +1,6 @@
 import json
 from pydantic import BaseModel,Field
+from openai.types.chat import ChatCompletionToolParam
 
 from apps.api.src.api.schemas.market_schemas import MarketStructure
 from apps.api.src.api.core.enum import MarketTrend
@@ -17,12 +18,14 @@ async def get_market_structure(args:MarketStructureArgs) -> MarketStructure:
         trend=MarketTrend.Bullish
     )
     
-MARKET_STUCTURE_TOOL = {
-    "type":"function",
-    "name":"get_market_structure",
-    "description":(
-        "trading trend such bullish , bearish , ranging ",
-        "trend en the specified time frame "
-    ),
-    "parameter":MarketStructureArgs.model_json_schema()
+MARKET_STUCTURE_TOOL: ChatCompletionToolParam = {
+    "type": "function",
+    "function": {
+        "name": "get_market_structure",
+        "description": (
+            "trading trend such bullish, bearish, or ranging; "
+            "trend in the specified time frame"
+        ),
+        "parameters": MarketStructureArgs.model_json_schema(),
+    },
 }
