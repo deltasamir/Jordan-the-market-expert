@@ -2,11 +2,7 @@ from operator import itemgetter
 import os
 import json
 from typing import Any , cast
-from openai.types.chat import (
-    ChatCompletionMessageParam,
-    ChatCompletionToolParam,
-    ChatCompletionMessageFunctionToolCall
-)
+from openai.types.chat import ChatCompletionMessageParam
 
 from services.config import client, MODEL
 from apps.api.src.api.schemas.market_schemas import Price
