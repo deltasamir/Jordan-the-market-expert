@@ -1,10 +1,14 @@
 from operator import itemgetter
 import os
 import json
-from sys import exception
-from typing import Any
+from typing import Any , cast
+from openai.types.chat import (
+    ChatCompletionMessageParam,
+    ChatCompletionToolParam,
+    ChatCompletionMessageFunctionToolCall
+)
 
-from services.config import client, conversation, MODEL
+from services.config import client, MODEL
 from apps.api.src.api.schemas.market_schemas import Price
 from tools.registry import TOOLS, TOOLS_FUNCTIONS, TOOL_SCHEMAS
 
@@ -27,25 +31,32 @@ Rules:
 - Do not claim certainty about future market direction.
 """
 
-
 async def run_llm(user_message: str):
+  
+    messages: list[ChatCompletionMessageParam] = [
+    {
+        "role": "system",
+        "content": SYSTEM_PROMPT,
+    },
+    {
+        "role": "user",
+        "content": user_message,
+    },
+]
     response = await client.chat.completions.create(
         model=MODEL,
-        messages=[
-            {"role": "system", "content": SYSTEM_PROMPT},
-            {"role": "user", "content": user_message},
-        ],
+        messages=messages,
         tools=TOOLS,
         tool_choice="auto",
     )
     assistant_message = response.choices[0].message
 
-    # ------ NO TOOL CALL ------
+      # ------ NO TOOL CALL ------
     if not assistant_message.tool_calls:
         return assistant_message.content or ""
 
     # ------ ADD ASSISTANT TOOL CALL TO CONVERSATION ------
-    conversation.append(
+    messages.append(
         {
             "role": "assistant",
             "content": assistant_message.content,
@@ -78,10 +89,10 @@ async def run_llm(user_message: str):
 
                 result = await function(validated_arguments)
                 tool_result = json.loads(result.model_dump_json())
-            except exception as exc:
+            except Exception as exc:
                 tool_result = {"error": str(exc)}
 
-        conversation.append(
+        messages.append(
             {
                 "role": "tool",
                 "tool_call_id": tool_call.id,
@@ -100,7 +111,3 @@ async def run_llm(user_message: str):
     )
 
     return final_response.choices[0].message.content or ""
-            
-          
-     
-     

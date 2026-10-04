@@ -1,3 +1,5 @@
+from openai.types.chat import ChatCompletionToolParam
+
 from api.tools.market_data import (
     MarketDataArgs,
     MARKET_DATA_TOOL,
@@ -23,7 +25,7 @@ from api.tools.setup import (
 )
 
 
-TOOLS = [
+TOOLS: list[ChatCompletionToolParam] = [
     MARKET_DATA_TOOL,
     ECONOMIC_NEWS_TOOL,
     MARKET_STUCTURE_TOOL,
