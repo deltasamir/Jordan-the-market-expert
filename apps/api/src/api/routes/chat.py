@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 
 from apps.api.src.api.schemas.chat import ChatResponse,ChatRequest
-from apps.api.src.api.services.llm import
+from apps.api.src.api.services.llm import run_llm
 
 
 router = APIRouter(
@@ -13,4 +13,8 @@ router = APIRouter(
 
 async def Chat(request=ChatRequest):
     
-    answer = await
+    answer = await run_llm(request.message)
+    
+    return ChatResponse(
+        answer=answer
+    )
