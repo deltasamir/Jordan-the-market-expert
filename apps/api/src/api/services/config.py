@@ -10,3 +10,5 @@ client = AsyncOpenAI(
 )
 
 conversation = "You are a profitional trader market analyzer "
+
+MODEL = "openai/gpt-4o"
