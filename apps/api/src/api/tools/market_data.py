@@ -3,7 +3,7 @@ from pydantic import BaseModel,Field
 from openai.types.chat import ChatCompletionToolParam
 
 
-from apps.api.src.api.schemas.market_schemas import Price
+from api.schemas.market_schemas import Price
 
 #market tool argument
 
@@ -18,7 +18,7 @@ class MarketDataArgs(BaseModel):
     
 async def get_market_data(args : MarketDataArgs) -> Price:
     return Price(
-         current_price=1.1742,
+        current_price=1.1742,
         change=0.42,
         price_high=1.1765,
         price_low=1.1688,

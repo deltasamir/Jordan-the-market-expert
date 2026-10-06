@@ -4,9 +4,9 @@ import json
 from typing import Any , cast
 from openai.types.chat import ChatCompletionMessageParam
 
-from services.config import client, MODEL
-from apps.api.src.api.schemas.market_schemas import Price
-from tools.registry import TOOLS, TOOLS_FUNCTIONS, TOOL_SCHEMAS
+from api.services.config import client, MODEL
+from api.schemas.market_schemas import Price
+from api.tools.registry import TOOLS, TOOLS_FUNCTIONS, TOOL_SCHEMAS
 
 # model name
 model_name: str = "Jordan"
