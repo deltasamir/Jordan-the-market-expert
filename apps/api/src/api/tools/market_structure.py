@@ -2,8 +2,8 @@ import json
 from pydantic import BaseModel,Field
 from openai.types.chat import ChatCompletionToolParam
 
-from apps.api.src.api.schemas.market_schemas import MarketStructure
-from apps.api.src.api.core.enum import MarketTrend
+from api.schemas.market_schemas import MarketStructure
+from api.core.enum import MarketTrend
 
 class MarketStructureArgs(BaseModel):
     symbol :str = Field(

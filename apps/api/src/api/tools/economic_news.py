@@ -2,8 +2,8 @@ import json
 from pydantic import BaseModel,Field
 from openai.types.chat import ChatCompletionToolParam
 
-from apps.api.src.api.schemas.market_schemas import EconomicNews
-from apps.api.src.api.core.enum import NewsRisk
+from api.schemas.market_schemas import EconomicNews
+from api.core.enum import NewsRisk
 
 class EconomicNewsArgs(BaseModel):
     symbol :str = Field(
